@@ -1,0 +1,54 @@
+#!/bin/bash
+#---------------------------------------Add Group To System and users to group ---------------------------------By:FaresM
+while true; do
+        group_name=$(whiptail --inputbox "Enter new group name" 8 39 iti --title "Add Group" 3>&1 1>&2 2>&3)
+        exit_status=$?
+        if [ $exit_status -ne 0 ]; then
+        whiptail --msgbox "Operation cancelled!" 8 40
+        return 0
+        fi
+
+        if [ -z "$group_name" ]; then
+                whiptail --msgbox "you did not write Group name !" 8 40
+                continue
+        fi
+
+        groupadd $group_name>/dev/null 2>&1
+        if [ $? -ne 0 ]; then
+                whiptail --msgbox "Group exist !" 8 40
+        else
+                whiptail --msgbox "Group added Succecfully !" 8 40
+                break
+        fi
+done
+
+
+if (whiptail --yesno "Do you want to add a user to group '$group_name'?" 8 40 --title "Add User to Group"); then
+         exit_status1=$?
+        if [ $exit_status1 -ne 0 ]; then
+        whiptail --msgbox "Operation cancelled!" 8 40
+        return 0
+        fi
+        while true; do
+        user_name=$(whiptail --inputbox "Enter username to add to '$group_name':" 8 39 user1 --title "Add User to Group" 3>&1 1>&2 2>&3)
+        exit_status2=$?
+        if [ $exit_status2 -ne 0 ]; then
+        whiptail --msgbox "Operation cancelled!" 8 40
+        return 0
+        fi
+
+        if [ -z $user_name ]; then
+                whiptail --msgbox "you did not write user name !" 8 40
+                continue
+        fi
+
+        usermod -aG  $group_name $user_name >/dev/null 2>&1
+
+        if [ $? -ne 0 ]; then
+                whiptail --msgbox "user not exist  !" 8 40
+        else
+                whiptail --msgbox "User $user_name added Succecfully to the group $group_name  !" 8 40
+                break
+        fi
+        done
+fi
