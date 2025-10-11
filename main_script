@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# This script provides a menu for basic system tasks.
+
+# Display the menu and store the selection in the variable 'SELECTION'
+SELECTION=$(
+    whiptail --title "System Actions" --menu "Select an action:" 25 78 16 \
+    "Add User" "Add a user to the system" \
+    "Modify User" "Modify an existing User." \
+    "Delete User" "Delete an existing User." \
+    "List Users" "List all users on the system." \
+    "Add Group" "Add a group to the system." \
+    "Modify Group" "Modify Group." \
+    "Delete Group" "Delete an existing User." \
+    "List Groups" "Modify an existing User." \
+    "Enable User" "Unlock User account." \
+    "Disable USER" "Lock User account." \
+    "About" "Info about this program" \
+    3>&1 1>&2 2>&3 # Redirect stderr to stdout for whiptail
+)
+
+# Get the exit status of whiptail
+EXIT_STATUS=$?
+if [ $EXIT_STATUS -eq 1 ] ; then
+        exit 1
+else
+        echo""
+fi
+
+# Use a case statement to handle the selection
+case $SELECTION in
+    "Add User")
+        source ./adduser
+        ;;
+    "Modify User")
+        #source ./modify
+        # Add disk usage commands here
+        ;;
+    "Delete User")
+        source ./del
+        ;;
+    "List Users")
+
+        source ./show
+        ;;
+    "Add Group" )
+        source ./add_group
+        ;;
+    *)
+        echo "Invalid selection!"
+        ;;
+esac
+bash ./sh
