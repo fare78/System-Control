@@ -1,0 +1,31 @@
+#!/bin/bash
+
+user_name=$(whiptail --inputbox "Enter username" 8 39 fares --title "Add User" 3>&1 1>&2 2>&3)
+EXIT_STATUS=$?
+if [ $EXIT_STATUS -ne 0 ] ; then
+         whiptail --msgbox "Operation cancelled!" 8 40
+        return 0
+fi
+
+useradd "$user_name" >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+        whiptail --msgbox "user exist or you didnot write your name !" 8 40
+else
+        whiptail --msgbox "User '$user_name' added successfully!" 8 40
+        while true
+        do
+                password=$(whiptail --passwordbox "Please enter your password:" 10 30 3>&1 1>&2 2>&3)
+
+                #password=$(whiptail --inputbox "Enter password" 8 39 Blue --title "Add User" 3>&1 1>&2 2>&3)
+                if [ -z $password ]; then
+                        whiptail --msgbox "Password  can not be ebpty!" 8 40
+                        continue
+                else
+
+                        echo "$user_name:$password" | sudo chpasswd
+                        whiptail --msgbox "Password  added successfully!" 8 40
+                        chage -d 0 $user_name
+                        break
+                fi
+        done
+fi
