@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# enter group name
+#if group exists ?
+#group deleted
+#else
+#group not exist
+
+while true; do
+group_name=$(whiptail --inputbox "Enter Groupname" 8 39 name... --title "Delete Group" 3>&1 1>&2 2>&3)
+exit_status=$?
+if [ $exit_status -ne 0 ]; then
+        whiptail --msgbox "Operation cancelled!" 8 40
+        return 0
+fi
+if [ -z "$group_name" ]; then
+        whiptail --msgbox "you did not write Group name !" 8 40
+        continue
+fi
+groupdel -f   "$group_name" >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+        whiptail --msgbox "Group '$group_name' not exist" 8 40
+else
+         whiptail --msgbox "Group '$group_name' deleted successfully!" 8 40
+         break
+fi
+done
