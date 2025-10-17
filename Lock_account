@@ -1,0 +1,28 @@
+while true
+do
+user_name=$(whiptail --inputbox "Enter username" 8 39 fares --title "Lock User" 3>&1 1>&2 2>&3)
+EXIT_STATUS=$?
+if [ $EXIT_STATUS -ne 0 ] ; then
+         whiptail --msgbox "Operation cancelled!" 8 40
+        return 0
+fi
+
+if [ -z "$user_name" ]
+then
+
+         whiptail --msgbox "please enter account name , can not be empty " 8 40
+         continue
+fi
+
+usermod -L $user_name
+if [ $? -ne 0 ]
+then
+        whiptail --msgbox "User '$user_name' not exist" 8 40
+else
+         whiptail --msgbox "User '$user_name' Locked successfully!" 8 40
+         break
+fi
+done
+
+
+
