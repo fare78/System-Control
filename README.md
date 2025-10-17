@@ -47,3 +47,13 @@ sudo apt install whiptail openssl passwd
 bash main.sh
 
 └── README.md             # Documentation file
+## 📸 Screenshots
+
+### 🧭 Main Menu
+![Main Menu](images/main.png)
+
+### ➕ Add User Window
+![Add User](images/adduser.png)
+
+
+
