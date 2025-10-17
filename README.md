@@ -50,10 +50,10 @@ bash main.sh
 ## 📸 Screenshots
 
 ### 🧭 Main Menu
-![Main Menu](../images/main.png)
+![Main Menu](./images/main.png)
 
 ### ➕ Add User Window
-![Add User](../images/adduser.png)
+![Add User](./images/adduser.png)
 
 
 
