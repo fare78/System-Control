@@ -1,0 +1,10 @@
+#!/bin/bash
+#--------------------------List All System Users------------------------------------------------------------------By:Fares"
+
+
+system_users=$(grep "bin/bash" /etc/passwd | cut -d : -f1)
+if [ -z "$system_users" ]; then
+        whiptail --title "No Users Found " --msgbox " No users" 40 78
+else
+        whiptail --title "All System Normal Users ------ scroll down and up for more " --msgbox " $system_users " 20 50 --scrolltext
+fi
