@@ -1,0 +1,20 @@
+while true; do
+user_name=$(whiptail --inputbox "Enter User name" 8 39 name... --title "Delete User" 3>&1 1>&2 2>&3)
+exit_status=$?
+if [ $exit_status -ne 0 ]; then
+        whiptail --msgbox "Operation cancelled!" 8 40
+        return 0
+fi
+if [ -z "$user_name" ]; then
+        whiptail --msgbox "you did not write User name !" 8 40
+        continue
+fi
+userdel -f -r   "$user_name" >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+        whiptail --msgbox "User '$user_name' not exist" 8 40
+else
+         whiptail --msgbox "User '$user_name' deleted successfully!" 8 40
+         break
+fi
+done
