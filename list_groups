@@ -1,0 +1,9 @@
+#!/bin/bash
+#--------------------------List All System Users------------------------------------------------------------------By:Fares"
+
+
+system_groups=$(cut -d : -f1 /etc/group )
+if [ -z "$system_groups" ]; then
+        whiptail --title "No Groups Found " --msgbox " No users" 40 78
+else
+        whiptail --title "All System Groups ------ scroll down and up for more " --msgbox " $system_groups" 20 50 --scrolltext
